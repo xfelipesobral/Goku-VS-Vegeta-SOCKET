@@ -1,8 +1,4 @@
 var Game = {};
-var kW;
-var kA;
-var kS;
-var kD;
 var teclas;
 
 Game.init = function(){
@@ -32,13 +28,6 @@ Game.create = function(){
     layer.inputEnabled = true;
 
     /* TECLAS PARA MOVER */
-
-    kW = game.input.keyboard.addKey(Phaser.Keyboard.W);
-    /*kA = game.input.keyboard.addKey(Phaser.Keyboard.A);
-    kS = game.input.keyboard.addKey(Phaser.Keyboard.S);
-    kD = game.input.keyboard.addKey(Phaser.Keyboard.D);*/
-
-    //teclas = game.input.keyboard.addKeys('W,S,A,D');
     teclas = game.input.keyboard.addKeys({
                                           'w': Phaser.Keyboard.W,
                                           's': Phaser.Keyboard.S,
@@ -46,11 +35,6 @@ Game.create = function(){
                                           'd': Phaser.Keyboard.D
                                         });
 
-    /*kW.onDown.add(Client.moveY, this);
-    kS.onDown.add(Client.moveNY, this);
-    */
-    /*kD.onDown.add(Client.moveX, this);
-    kA.onDown.add(Client.moveNX, this);*/
     
     layer.events.onInputUp.add(Game.getCoordinates, this);
     Client.askNewPlayer();
