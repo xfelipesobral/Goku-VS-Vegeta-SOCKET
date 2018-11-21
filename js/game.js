@@ -1,4 +1,9 @@
 var Game = {};
+var kW;
+var kA;
+var kS;
+var kD;
+var teclas;
 
 Game.init = function(){
     game.stage.disableVisibilityChange = true;
@@ -28,36 +33,65 @@ Game.create = function(){
 
     /* TECLAS PARA MOVER */
 
-    var kW = game.input.keyboard.addKey(Phaser.Keyboard.W);
-    var kA = game.input.keyboard.addKey(Phaser.Keyboard.A);
-    var kS = game.input.keyboard.addKey(Phaser.Keyboard.S);
-    var kD = game.input.keyboard.addKey(Phaser.Keyboard.D);
+    kW = game.input.keyboard.addKey(Phaser.Keyboard.W);
+    /*kA = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    kS = game.input.keyboard.addKey(Phaser.Keyboard.S);
+    kD = game.input.keyboard.addKey(Phaser.Keyboard.D);*/
+
+    //teclas = game.input.keyboard.addKeys('W,S,A,D');
+    teclas = game.input.keyboard.addKeys({
+                                          'w': Phaser.Keyboard.W,
+                                          's': Phaser.Keyboard.S,
+                                          'a': Phaser.Keyboard.A,
+                                          'd': Phaser.Keyboard.D
+                                        });
 
     /*kW.onDown.add(Client.moveY, this);
-    kA.onDown.add(Client.moveNX, this);
     kS.onDown.add(Client.moveNY, this);
     */
-    kD.onDown.add(Client.moveX, this);
+    /*kD.onDown.add(Client.moveX, this);
+    kA.onDown.add(Client.moveNX, this);*/
     
     layer.events.onInputUp.add(Game.getCoordinates, this);
     Client.askNewPlayer();
 };
 
+Game.update = function(){
+
+    Client.moverJ(0, 0);
+
+    if (teclas.w.isDown){
+        Client.moverJ(0, -1);
+    }  else
+    
+    if (teclas.s.isDown){
+        Client.moverJ(0, 1);
+    } else
+    
+    if (teclas.a.isDown){
+        Client.moverJ(-1, 0);
+    } else
+    
+    if (teclas.d.isDown){
+        Client.moverJ(1, 0);
+    } 
+
+}
+
 Game.getCoordinates = function(layer,pointer){
-    Client.sendClick(pointer.worldX,pointer.worldY);
+    //Client.sendClick(pointer.worldX,pointer.worldY);
 };
 
 Game.addNewPlayer = function(id,x,y){
     Game.playerMap[id] = game.add.sprite(x,y,'sprite');
+    Game.physics.enable(Game.playerMap[id]);
 };
 
-Game.movePlayer = function(id,x,y){
+Game.movePlayer = function(id,dx,dy){
     var player = Game.playerMap[id];
-    var distance = Phaser.Math.distance(player.x,player.y,x,y);
-    var tween = game.add.tween(player);
-    var duration = distance*10;
-    tween.to({x:x,y:y}, duration);
-    tween.start();
+    player.body.velocity.y = dy;
+    player.body.velocity.x = dx;
+    //Client.socket.emit('atualizarJogador', {player:player});
 };
 
 Game.removePlayer = function(id){

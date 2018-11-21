@@ -3,8 +3,6 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 
-const VELOCIDADE = 80;
-
 app.use('/css',express.static(__dirname + '/css'));
 app.use('/js',express.static(__dirname + '/js'));
 app.use('/assets',express.static(__dirname + '/assets'));
@@ -14,6 +12,7 @@ app.get('/',function(req,res){
 });
 
 server.lastPlayderID = 0;
+const VELOCIDADE = 200;
 
 server.listen(3000, function(){
     console.log('localhost:3000');
@@ -24,8 +23,8 @@ io.on('connection',function(socket){
     socket.on('newplayer',function(){
         socket.player = {
             id: server.lastPlayderID++,
-            x: randomInt(100,400),
-            y: randomInt(100,400)
+            x: 250,
+            y: 250
         };
         socket.emit('allplayers',getAllPlayers());
         socket.broadcast.emit('newplayer',socket.player);
@@ -37,13 +36,14 @@ io.on('connection',function(socket){
             io.emit('move',socket.player);
         });
 
-        socket.on('mover', function(){
-            console.log("ANTES -> "+socket.player.x);
-            socket.player.x = socket.player.x+VELOCIDADE;
-            console.log("DEPOIS -> "+socket.player.x);
-            io.emit('move',socket.player);
+        socket.on('moverJogador', function(data){
+            io.emit('move',{jogador: socket.player.id, dx: data.dx*VELOCIDADE, dy: data.dy*VELOCIDADE});
         });
 
+        socket.on('atualizarJogador', function(data){
+            socket.player = data.player;
+            console.log('JOGADOR '+socket.player.id+' ATUALIZADO!');
+        });
 
         socket.on('disconnect',function(){
             io.emit('remove',socket.player.id);

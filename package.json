@@ -1,29 +1,14 @@
 {
-  "name": "basic-mmo-phaser",
+  "name": "ufpr-fight",
   "version": "1.0.0",
-  "description": " Very basic multiplayer online game example made with Phaser, Node.js and Socket.io ",
+  "description": " Jogo para disciplina de REDES - UFPR PALOTINA ",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jerenaux/basic-mmo-phaser.git"
+    "url": "git+https://github.com/krepper/jogo_redes.git"
   },
-  "keywords": [
-    "Phaser",
-    "Multiplayer",
-    "game",
-    "Node.js",
-    "socket.io"
-  ],
-  "author": "Jerome Renaux",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Jerenaux/basic-mmo-phaser/issues"
-  },
-  "homepage": "https://github.com/Jerenaux/basic-mmo-phaser#readme",
+  "author": "[GRR20177374]Felipe & Luan",
+  "homepage": "https://github.com/krepper/jogo_redes#readme",
   "dependencies": {
     "express": "^4.15.2",
     "package.json": "^2.0.1",

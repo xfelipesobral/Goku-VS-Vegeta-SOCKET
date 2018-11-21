@@ -1,6 +1,3 @@
-/**
- * Created by Jerome on 03-03-17.
- */
 var Client = {};
 Client.socket = io.connect();
 
@@ -17,22 +14,14 @@ Client.sendClick = function(x,y){
   Client.socket.emit('click',{x:x,y:y});
 };
 
+Client.moverJ = function(x, y){ // MOVER JOGADOR
+    Client.socket.emit('moverJogador', {dx:x, dy:y});
+};
 
-/* TECLAS MOVER */
-Client.moveX = function(){
-    Client.socket.emit('mover');
-};
-/*Client.moveNX = function(){
-    
-};
-Client.moveY = function(){
-    
-};
-Client.moveNY = function(){
-    
-};*/
-// --------------- //
-
+Client.atualizarJ = function(player){
+    console.log("chegou aqui");
+    Client.socket.emit('atualizarJogador', {player:player});
+}
 
 Client.socket.on('newplayer',function(data){
     Game.addNewPlayer(data.id,data.x,data.y);
@@ -44,7 +33,7 @@ Client.socket.on('allplayers',function(data){
     }
 
     Client.socket.on('move',function(data){
-        Game.movePlayer(data.id,data.x,data.y);
+        Game.movePlayer(data.jogador,data.dx,data.dy);
     });
 
     Client.socket.on('remove',function(id){
