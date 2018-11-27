@@ -15,7 +15,9 @@ print("SERVIDOR INICIALIZADO! [IP: "+HOST+":"+str(PORT)+"]")
 while True:
     data, ip = udp.recvfrom(1500)
 
-    chave = chave(data)
+    chave = data.decode()
+    chave = chave.split('$')
+    chave = chave[0]
 
     if(chave == "NOVOJOGADOR"):
         jogadores.append("teste")

@@ -1,13 +1,5 @@
 import socket
 
-def chave(str):
-        print(str)
-        str = str.decode()
-        str = str.split('$')
-        x = str[0]
-
-        return x
-
 def enviar(udp, data, destino):
         udp.sendto(data.encode(), destino)
 
