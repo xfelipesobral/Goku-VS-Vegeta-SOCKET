@@ -1,7 +1,21 @@
 #!/usr/bin/python
 
 import pygame as pg
+import socket
 import sys, os
+
+# SOCKET COMEÇO
+HOST = 'localhost' 
+PORT = 5000     
+
+udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+dest = (HOST, PORT)
+
+def enviar(udp, data, destino):
+    udp.sendto(data.encode(), destino)
+
+enviar(udp, "CONECTEI$jogo", dest)
+# SOCKET FIM
 
 COR_BRANCO = (255, 255, 255)
 
@@ -26,6 +40,14 @@ def big_bang(inic, tela,
 
 
     while True:
+        data = udp.recv(1024)
+        data = data.decode()
+        data = data.split('$')
+        chave = data[0]
+        if(chave == "BROADCAST_PLAYER"):
+            print(data[1])
+
+        print("1")
 
         pg.display.flip()
 
