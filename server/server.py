@@ -34,6 +34,7 @@ while True:
     chave = chave[0]
 
     if(chave == "CONECTEI"):
+        print(ip)
         player = Jogador(lastPlayerID, ip, 0, 0, 100)
         lastPlayerID += 1
         player.inserir()

@@ -11,8 +11,6 @@ from game.namedlist import namedlist
 ====================
 '''
 
-
-
 P1 = namedlist("P1", "x, y, dx, dy, hp")
 P1_PADRAO = P1(PAREDE_ESQUERDA, PAREDE_BAIXO, 0, 0, 100)
 

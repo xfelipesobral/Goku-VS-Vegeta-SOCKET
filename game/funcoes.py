@@ -1,16 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import socket
 from game.dados import *
 import math
 import random
-
 
 '''
 ====================
 	  FUNCOES
 ====================
 '''
+
+# SOCKET COMEÇO
+HOST = 'localhost' 
+PORT = 5000     
+
+udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+dest = (HOST, PORT)
+
+def enviar(udp, data, destino):
+    udp.sendto(data.encode(), destino)
+
+enviar(udp, "CONECTEI$jogo", dest)
+# SOCKET FIM
 
 ## MOVER JOGO
 
@@ -34,7 +46,18 @@ def mover_jogo(jogo):
 	mover_player(jogo.p1)
 	mover_player(jogo.p2)
 
+	global udp
+	data, ip = udp.recvfrom(1024)
+	data = data.decode()
+	data = data.split('$')
+	chave = data[0]
+	if(chave == "BROADCAST_PLAYER"):
+		print(data[1])
+ 
 	return jogo
+
+	
+
 
 ## DESENHA JOGO
 
