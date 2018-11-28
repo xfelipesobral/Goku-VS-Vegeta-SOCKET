@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from game.funcoes import *
+import _thread
+from client import *
+
+try:
+      _thread.start_new_thread(initClient, ())
+except:
+      print("NUM DEU NAO")
 
 
 '''

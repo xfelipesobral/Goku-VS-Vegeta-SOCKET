@@ -34,9 +34,6 @@ def mover_jogo(jogo):
  
 	return jogo
 
-	
-
-
 ## DESENHA JOGO
 
 def desenha_p1(p1):
