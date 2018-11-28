@@ -3,13 +3,15 @@ import hashlib
 jogadores = list()
 
 class Jogador:
-    def __init__(self, id, x, y):
+    def __init__(self, id, ip, x, y, hp):
         self.id = id
+        self.ip = ip
         self.x = x
         self.y = y
+        self.hp = hp
 
-        def inserir(self):
-            jogadores.append(self)
+    def inserir(self):
+        jogadores.append(self)
 
-        def remover(self):
-            jogadores.remove(self)
+    def remover(self):
+        jogadores.remove(self)

@@ -14,9 +14,9 @@ import random
 TELA = pg.display.set_mode((LARGURA, ALTURA))
 
 try:
-    IMG_P1 = pg.image.load('../images/p1.png')
-    IMG_P2 = pg.image.load('../images/p2.png')
-    IMG_BACKGROUND = pg.image.load('../images/bg.png')
+    IMG_P1 = pg.image.load('images/p1.png')
+    IMG_P2 = pg.image.load('images/p2.png')
+    IMG_BACKGROUND = pg.image.load('images/bg.png')
 
 except:
     IMG_P1 = pg.Surface((100,100),pg.SRCALPHA)

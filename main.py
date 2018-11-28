@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from game.funcoes import *
+from client import *
 
 '''
 ====================
