@@ -62,7 +62,6 @@ def mover_player(player):
 		return player
 
 def mover_jogo(jogo):
-
 	for jogador in jogo.jogadores:
 		if jogador.hp < 0:
 			print("JOGO TERMINOU")

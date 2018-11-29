@@ -36,7 +36,7 @@ while True:
 
     if(chave == "CONECTEI"):
         print(ip)
-        player = Jogador(lastPlayerID, ip, 0, 0, 100)
+        player = Jogador(lastPlayerID, ip, 400, 300, 100)
         lastPlayerID += 1
         player.inserir()
         ipConectados.append(ip)
@@ -53,8 +53,3 @@ while True:
     #print (cliente, msg.decode())
 
 udp.close()
-
-'''
-+ quando conectar, cria novo jogador
-+ servidor emite em broadcast todos jogadores
-'''

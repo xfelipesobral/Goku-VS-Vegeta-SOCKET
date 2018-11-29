@@ -18,9 +18,9 @@ def initMain(data, jogo):
 
 def atualizarJogador(data, jogo):
     verif = True
-
+    ### CORRIGIR AQUI
     for jogador in jogo.jogadores:
-        if(jogador.id == data["id"]):
+        if(jogador.id == int(data["id"])):
             data = json.loads(data)
             jogador.x = data["x"]
             jogador.y = data["y"]
