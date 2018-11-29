@@ -16,7 +16,7 @@ print("SERVIDOR INICIALIZADO! [IP: "+HOST+":"+str(PORT)+"]")
 
 '''
     // ATUALIZAÇÕES
-'''
+
 def atualizarJogadores():
     for jogador in jogadores:
         data = "BROADCAST_PLAYER$"+stringNewPlayer(jogador)
@@ -25,6 +25,7 @@ def atualizarJogadores():
 def atualizarJogador(jogador):
     data = "BROADCAST_PLAYER$"+stringNewPlayer(jogador)
     enviar(udp, data, ipConectados)
+'''
 
 while True:
     data, ip = udp.recvfrom(1024)
@@ -40,7 +41,8 @@ while True:
         player.inserir()
         ipConectados.append(ip)
         enviar(udp, "CONECTEI$conectou", ip)
-        atualizarJogadores()
+        stringInitPlayer(udp, ip, player)
+        atualizarJogadores(udp, ipConectados, jogadores)
 
 
     

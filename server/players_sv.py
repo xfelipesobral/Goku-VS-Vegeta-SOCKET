@@ -1,5 +1,3 @@
-import hashlib
-
 jogadores = list()
 
 class Jogador:
