@@ -10,7 +10,7 @@ import random
 ====================
 '''
 
-(LARGURA, ALTURA) = (800, 640)
+(LARGURA, ALTURA) = (640, 800)
 TELA = pg.display.set_mode((LARGURA, ALTURA))
 
 try:
