@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import json
 
 class Jogador:
@@ -19,6 +22,8 @@ def initMain(data, jogo):
 def atualizarJogador(data, jogo):
     verif = True
     ### CORRIGIR AQUI
+    print(jogo)
+    
     for jogador in jogo.jogadores:
         if(jogador.id == int(data["id"])):
             data = json.loads(data)

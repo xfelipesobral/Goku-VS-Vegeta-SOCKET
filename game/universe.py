@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import pygame as pg
 import sys, os
@@ -8,7 +9,7 @@ from game.players import *
 
 COR_BRANCO = (255, 255, 255)
 
-estadoClient = None
+estado = None
 
 def big_bang(inic, tela,
              quando_tick=lambda e: e, \
@@ -23,11 +24,17 @@ def big_bang(inic, tela,
         tela.fill(COR_BRANCO)
         desenhar(estado)
 
+    global estado
+
+    pg.init()
+    estado = inic
+    clock = pg.time.Clock()
+
     '''
     ## SOCKET ---
     '''
     def updateSocket(udp):
-        global estadoClient
+        global estado
 
         while True:
             data = udp.recv(1024)
@@ -43,25 +50,19 @@ def big_bang(inic, tela,
                     print("CONECTADO")
 
             if(chave == "NEW_PLAYER"):
-                estadoClient = initMain(data[1], estadoClient)
+                initMain(data[1], estado)
 
             if(chave == "BROADCAST_PLAYER"):
-                estadoClient = atualizarJogador(data[1], estadoClient)
+                atualizarJogador(data[1], estado)
     '''
     ## SOCKET --/
     '''
-
-    pg.init()
-    estado = inic
-    clock = pg.time.Clock()
 
     socketX = threading.Thread(target=updateSocket, args=(udp, ))
 
     socketX.start()
 
     while True:
-        global estadoClient
-
         pg.display.flip()
 
         if parar_quando(estado):
