@@ -4,7 +4,6 @@
 import pygame as pg
 import sys, os
 import threading
-from game.client import *
 from game.players import *
 
 COR_BRANCO = (255, 255, 255)
@@ -33,6 +32,7 @@ def big_bang(inic, tela,
     '''
     ## SOCKET ---
     '''
+
     def updateSocket(udp):
         global estado
 
@@ -76,17 +76,30 @@ def big_bang(inic, tela,
 
             if event.type == pg.KEYDOWN:
                 estado = quando_tecla(estado, event.key)
+                #enviarJogador(estado.jogador)
+                
                 desenha_tela()
             elif event.type == pg.KEYUP:
                 estado = quando_solta_tecla(estado, event.key)
+                #enviarJogador(estado.jogador)
 
             elif event.type in [pg.MOUSEBUTTONDOWN, pg.MOUSEBUTTONUP, pg.MOUSEMOTION]:
                 x, y = pg.mouse.get_pos()
                 estado = quando_mouse(estado, x, y, event.type)
                 desenha_tela()
 
+
+        '''
+        ### PROBLEMA -> NÃO ATUALIZANDO O SERVIDOR QUANDO O DX É 0
+        '''
+        try:
+            if(estado.jogador.dx != 0):
+                enviarJogador(estado.jogador)
+        except:
+            pass
+
+
         estado = quando_tick(estado)
-        estadoClient = estado
 
         desenha_tela()
 

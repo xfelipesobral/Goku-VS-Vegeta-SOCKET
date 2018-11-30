@@ -35,11 +35,12 @@ while True:
 
     chave = data.decode()
     chave = chave.split('$')
+    dado = chave[1]
     chave = chave[0]
 
     if(chave == "CONECTEI"):
         print(ip)
-        player = Jogador(lastPlayerID, ip, 400, 300, 100)
+        player = Jogador(lastPlayerID, ip, 350, 580, 100)
         lastPlayerID += 1
         player.inserir()
         ipConectados.append(ip)
@@ -47,10 +48,12 @@ while True:
         stringInitPlayer(udp, ip, player)
         atualizarJogadores(udp, ipConectados, jogadores)
 
-
-    
     if(chave == "JOGADORES"):
         enviar(udp, "JOGADORES$"+jogadores[0], ip)
+
+    if(chave == "ATUALIZAR_JOGADOR"):
+        attJogador(udp, ipConectados, dado)
+        print("["+str(ip[0])+":"+str(ip[1])+"] "+str(data))
 
     #verificar(msg.decode(), cliente)
     #print (cliente, msg.decode())

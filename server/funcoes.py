@@ -28,6 +28,10 @@ def atualizarJogador(udp, ipConectados, jogador):
 	data = "BROADCAST_PLAYER$"+stringNewPlayer(jogador)
 	enviar(udp, data, ipConectados)
 
+def attJogador(udp, ip, jogador):
+	data = "BROADCAST_PLAYER$"+jogador
+	enviar(udp, data, ip)
+
 def stringInitPlayer(udp, ip, player):
 	data = "NEW_PLAYER$"+stringNewPlayer(player)
 	enviar(udp, data, ip)
