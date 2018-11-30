@@ -21,31 +21,36 @@ def mover_player(player):
 	else: 
 		player.x = player.x + player.dx
 
-		'''
 		if player.x > PAREDE_DIREITA:
 			player.x = PAREDE_DIREITA
-		elif player.x < PAREDE_DIREITA:
-			player.x = PAREDE_ESQUERDA
-		'''
+		elif player.x < PAREDE_ESQUERDA:
+			player.x = PAREDE_ESQUERDA	
+
+		return player
+
+def pular(player):
+	if player.dy == 0:
+		pass
+	else:
+		while player.y < PULO:
+			player.y = player.y + player.dy
 		
 		return player
 
-def mover_jogo(jogo):
-	'''
-	for jogador in jogo.jogadores:
-		if jogador.hp < 0:
-			print("JOGO TERMINOU")
+def descer(player):
+	if player.dy == 0:
+		pass
+	else:
+		while player.y > CHAO:
+			player.y = player.y - player.dy
+		
+		return player
 			
-		mover_player(jogador)'''
+
+def mover_jogo(jogo):
 
 	try:
-		'''for jogador in jogo.jogadores:
-			if jogador.hp < 0:
-				print("JOGO TERMINOU")
-				
-			mover_player(jogador)'''
 		mover_player(jogo.jogador)
-		#print(jogo.jogador.x)
 	except:
 		return jogo
  
@@ -64,7 +69,22 @@ def desenha_jogo(jogo):
 	for jogador in jogo.jogadores:
 		desenha_jogador(jogador)
 
-	#fonte = pg.font.SysFont("monospace", 40)
+	fonte = pg.font.SysFont("monospace", 40)
+
+	try:
+		textoP1= fonte.render(str(jogo.jogadores[0].hp), 1, (255, 255, 255))
+	except: 
+		textoP1 = fonte.render("NOT", 1, (255, 255, 255))
+
+	try:
+		textoP2 = fonte.render(str(jogo.jogadores[1].hp), 1, (255, 255, 255))
+	except: 
+		textoP2 = fonte.render("NOT", 1, (255, 255, 255))
+	
+	TELA.blit(textoP1, (PAREDE_ESQUERDA+80, PAREDE_BAIXO-40))
+	TELA.blit(textoP2, (PAREDE_DIREITA-80, PAREDE_BAIXO-40))
+
+	
 
 
 '''
@@ -76,6 +96,12 @@ def trata_tecla_player(player, tecla):
 		player.dx = -DX
 	elif (tecla == pg.K_RIGHT) or (tecla == pg.K_RIGHT and pg.K_SPACE):
 		player.dx = DX
+	elif (tecla == pg.K_UP):
+		print("PULAR")
+		#player.dy = DY
+		#pular(player)
+		
+	
 	
 	return player
 
