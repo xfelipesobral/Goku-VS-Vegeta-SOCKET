@@ -71,18 +71,23 @@ def desenha_jogo(jogo):
 
 	fonte = pg.font.SysFont("monospace", 40)
 
-	try:
-		textoP1= fonte.render(str(jogo.jogadores[0].hp), 1, (255, 255, 255))
-	except: 
-		textoP1 = fonte.render("NOT", 1, (255, 255, 255))
 
 	try:
-		textoP2 = fonte.render(str(jogo.jogadores[1].hp), 1, (255, 255, 255))
+		TELA.blit(IMG_LIFE, (X_LIFE, Y_LIFE))
+		textoP1= fonte.render(str(jogo.jogadores[0].hp), 1, (255, 255, 255))
+		TELA.blit(textoP1, (X_LIFE+32, Y_LIFE-5))		
 	except: 
-		textoP2 = fonte.render("NOT", 1, (255, 255, 255))
+		TELA.blit(IMG_DISCONNECT, (X_LIFE+32, Y_LIFE))
+
+	try:
+		TELA.blit(IMG_LIFE, (X_LIFE2, Y_LIFE))
+		textoP2 = fonte.render(str(jogo.jogadores[1].hp), 1, (255, 255, 255))
+		TELA.blit(textoP2, (X_LIFE2-72, Y_LIFE-5))
+	except: 
+		TELA.blit(IMG_DISCONNECT, (X_LIFE2-32, Y_LIFE))
 	
-	TELA.blit(textoP1, (PAREDE_ESQUERDA+80, PAREDE_BAIXO-40))
-	TELA.blit(textoP2, (PAREDE_DIREITA-80, PAREDE_BAIXO-40))
+	
+	
 
 	
 
