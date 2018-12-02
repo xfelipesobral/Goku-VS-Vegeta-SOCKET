@@ -54,6 +54,10 @@ def big_bang(inic, tela,
 
             if(chave == "BROADCAST_PLAYER"):
                 atualizarJogador(data[1], estado)
+
+            if(chave == "KICK"):
+                udp.close()
+                sys.exit(0)
     '''
     ## SOCKET --/
     '''

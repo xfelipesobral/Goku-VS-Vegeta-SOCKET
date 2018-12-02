@@ -44,7 +44,14 @@ IMG_LIFE = pg.transform.scale(IMG_LIFE, (32, 32))
 IMG_DISCONNECT = pg.transform.scale(IMG_DISCONNECT, (32, 32))
 IMG_KI = pg.transform.scale(IMG_KI, (32, 32))
 
-IMG_GOKU_ANDANDO_V = pg.transform.flip(IMG_GOKU_ANDANDO, True, False)
+#IMG_GOKU_ANDANDO_V = pg.transform.flip(IMG_GOKU_ANDANDO, True, False)
+#IMG_VEGETA_ANDANDO_V = pg.transform.flip(IMG_VEGETA_ANDANDO, True, False)
+
+'''
+### IMAGENS DOS PERSONAGENS
+'''
+IMG_GOKU = [IMG_GOKU_PARADO, IMG_GOKU_ANDANDO, IMG_GOKU_KI, IMG_GOKU_ATIRANDO]
+IMG_VEGETA = [IMG_VEGETA_PARADO, IMG_VEGETA_ANDANDO, IMG_VEGETA_KI, IMG_VEGETA_ATIRANDO]
 
 IMG_P1 = pg.transform.scale(IMG_P1, (32, 96))
 DX = 15

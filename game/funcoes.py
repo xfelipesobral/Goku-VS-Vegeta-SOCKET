@@ -28,6 +28,19 @@ def mover_player(player):
 
 		return player
 
+def voar(player):
+	if player.y < 0 or player.y > 580:
+		pass
+	else:
+		player.y = player.y + player.dy
+
+		if player.y < PAREDE_CIMA:
+			player.y = PAREDE_CIMA
+		elif player.y > 565:
+			player.y = 565
+		
+		return player
+
 def aumentar_ki(player):
 	if player.mp < 100:
 		player.mp = player.mp + player.dmp
@@ -35,29 +48,14 @@ def aumentar_ki(player):
 	if player.mp > 100:
 		player.mp = 100
 
-def pular(player):
-	if player.dy == 0:
-		pass
-	else:
-		while player.y < PULO:
-			player.y = player.y + player.dy
-		
-		return player
 
-def descer(player):
-	if player.dy == 0:
-		pass
-	else:
-		while player.y > CHAO:
-			player.y = player.y - player.dy
-		
-		return player
 			
 
 def mover_jogo(jogo):
 
 	try:
 		mover_player(jogo.jogador)
+		voar(jogo.jogador)
 		aumentar_ki(jogo.jogador)
 	except:
 		return jogo
@@ -70,19 +68,29 @@ def mover_jogo(jogo):
 
 def desenha_jogador(j):
 	try:
-		if(j.dmp > 0):
-			TELA.blit(IMG_GOKU_KI,(j.x - IMG_P1.get_width()/2, j.y - IMG_P1.get_height()/2))
-			return
+		img = None
+		personagem = None
+
+		# SE DIRECT +1 ->
+		# SE DIRECT -1 <-
+
+		if j.id == 0:
+			personagem = IMG_GOKU
+		elif j.id == 1:
+			personagem = IMG_VEGETA
 
 		if(j.dx == 0):
-			TELA.blit(IMG_GOKU_PARADO,(j.x - IMG_P1.get_width()/2, j.y - IMG_P1.get_height()/2))
-		elif(j.dx > 0):
-			TELA.blit(IMG_GOKU_ANDANDO,(j.x - IMG_P1.get_width()/2, j.y - IMG_P1.get_height()/2))
-		elif(j.dx < 0):
-			#IMG_ZUMBI_V = pg.transform.flip(IMG_ZUMBI, True, False)
-			TELA.blit(IMG_GOKU_ANDANDO_V,(j.x - IMG_P1.get_width()/2, j.y - IMG_P1.get_height()/2))
-		
-		
+			img = personagem[0] # PARADO
+		elif(j.dx > 0 or j.dx < 0):
+			img = personagem[1] # INDO
+		if(j.dmp > 0):
+			img = personagem[2] # ATIRANDO
+
+		if(j.direct == -1):
+			img = pg.transform.flip(img, True, False)
+
+		TELA.blit(img, (j.x - IMG_P1.get_width()/2, j.y - IMG_P1.get_height()/2))
+
 	except:
 		print(j)
 
@@ -96,7 +104,7 @@ def desenha_jogo(jogo):
 
 	fonte = pg.font.SysFont("monospace", 40)
 
-	print(jogo.jogador.mp)
+	#print(jogo.jogador.mp)
 	try:
 		TELA.blit(IMG_LIFE, (X_LIFE, Y_LIFE))
 		textoP1= fonte.render(str(jogo.jogadores[0].hp), 1, (255, 255, 255))
@@ -118,13 +126,15 @@ def desenha_jogo(jogo):
 def trata_tecla_player(player, tecla):
 	if (tecla == pg.K_LEFT) or (tecla == pg.K_LEFT and pg.K_SPACE):
 		player.dx = -DX
+		player.direct = -1
 	elif (tecla == pg.K_RIGHT) or (tecla == pg.K_RIGHT and pg.K_SPACE):
 		player.dx = DX
+		player.direct = 1
 	elif (tecla == pg.K_UP):
-		print("PULAR")
-		#player.dy = DY
-		#pular(player)
+		player.dy = -DY
 	elif (tecla == pg.K_DOWN):
+		player.dy = DY
+	elif (tecla == pg.K_w) and (player.dx == 0):
 		player.dmp = KI_UP
 		
 	return player
@@ -132,8 +142,9 @@ def trata_tecla_player(player, tecla):
 def trata_solta_tecla_player(player, tecla):
 	if(tecla == pg.K_RIGHT or tecla == pg.K_LEFT):
 		player.dx = 0
-		player.status = 1
-	elif(tecla == pg.K_DOWN):
+	if(tecla == pg.K_DOWN or tecla == pg.K_UP):
+		player.dy = 0
+	elif(tecla == pg.K_w):
 		player.dmp = 0
 	return player
 

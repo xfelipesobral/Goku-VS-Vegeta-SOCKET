@@ -14,6 +14,8 @@ udp.bind(orig)
 lastPlayerID = 0
 ipConectados = list()
 
+atualizacoes = 0
+
 print("SERVIDOR INICIALIZADO! [IP: "+HOST+":"+str(PORT)+"]")
 
 
@@ -39,18 +41,25 @@ while True:
     chave = chave[0]
 
     if(chave == "CONECTEI"):
-        print(ip)
-        player = Jogador(lastPlayerID, ip, 350, 580, 0, 0, 100, 50)
-        lastPlayerID += 1
-        player.inserir()
-        ipConectados.append(ip)
-        enviar(udp, "CONECTEI$conectou", ip)
-        stringInitPlayer(udp, ip, player)
-        atualizarJogadores(udp, ipConectados, jogadores)
+        if(lastPlayerID>1):
+            enviar(udp, "KICK$SERVIDOR_CHEIO", ip)
+        else:
+            print(ip)
+            if(lastPlayerID == 0):
+                player = Jogador(lastPlayerID, ip, 100, 565, 0, 0, 0, 1, 100, 50)
+            else:
+                player = Jogador(lastPlayerID, ip, 700, 565, 0, 0, 0, -1, 100, 50)
+            lastPlayerID += 1
+            player.inserir()
+            ipConectados.append(ip)
+            enviar(udp, "CONECTEI$conectou", ip)
+            stringInitPlayer(udp, ip, player)
+            atualizarJogadores(udp, ipConectados, jogadores)
 
     if(chave == "ATUALIZAR_JOGADOR"):
         attJogador(udp, ipConectados, dado)
-        print("["+str(ip[0])+":"+str(ip[1])+"] "+str(data))
+        print(atualizacoes)
+        atualizacoes += 1
 
     #verificar(msg.decode(), cliente)
     #print (cliente, msg.decode())
