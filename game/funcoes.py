@@ -28,6 +28,13 @@ def mover_player(player):
 
 		return player
 
+def aumentar_ki(player):
+	if player.mp < 100:
+		player.mp = player.mp + player.dmp
+	
+	if player.mp > 100:
+		player.mp = 100
+
 def pular(player):
 	if player.dy == 0:
 		pass
@@ -51,6 +58,7 @@ def mover_jogo(jogo):
 
 	try:
 		mover_player(jogo.jogador)
+		aumentar_ki(jogo.jogador)
 	except:
 		return jogo
  
@@ -61,7 +69,22 @@ def mover_jogo(jogo):
 '''
 
 def desenha_jogador(j):
-	TELA.blit(IMG_P1,(j.x - IMG_P1.get_width()/2, j.y - IMG_P1.get_height()/2))
+	try:
+		if(j.dmp > 0):
+			TELA.blit(IMG_GOKU_KI,(j.x - IMG_P1.get_width()/2, j.y - IMG_P1.get_height()/2))
+			return
+
+		if(j.dx == 0):
+			TELA.blit(IMG_GOKU_PARADO,(j.x - IMG_P1.get_width()/2, j.y - IMG_P1.get_height()/2))
+		elif(j.dx > 0):
+			TELA.blit(IMG_GOKU_ANDANDO,(j.x - IMG_P1.get_width()/2, j.y - IMG_P1.get_height()/2))
+		elif(j.dx < 0):
+			#IMG_ZUMBI_V = pg.transform.flip(IMG_ZUMBI, True, False)
+			TELA.blit(IMG_GOKU_ANDANDO_V,(j.x - IMG_P1.get_width()/2, j.y - IMG_P1.get_height()/2))
+		
+		
+	except:
+		print(j)
 
 def desenha_jogo(jogo):
 	TELA.blit(IMG_BACKGROUND, (0,0))
@@ -69,9 +92,11 @@ def desenha_jogo(jogo):
 	for jogador in jogo.jogadores:
 		desenha_jogador(jogador)
 
+	#print(jogo.jogadores[0].dx)
+
 	fonte = pg.font.SysFont("monospace", 40)
 
-
+	print(jogo.jogador.mp)
 	try:
 		TELA.blit(IMG_LIFE, (X_LIFE, Y_LIFE))
 		textoP1= fonte.render(str(jogo.jogadores[0].hp), 1, (255, 255, 255))
@@ -85,12 +110,6 @@ def desenha_jogo(jogo):
 		TELA.blit(textoP2, (X_LIFE2-72, Y_LIFE-5))
 	except: 
 		TELA.blit(IMG_DISCONNECT, (X_LIFE2-32, Y_LIFE))
-	
-	
-	
-
-	
-
 
 '''
 # TRATA_TECLA
@@ -105,14 +124,17 @@ def trata_tecla_player(player, tecla):
 		print("PULAR")
 		#player.dy = DY
 		#pular(player)
+	elif (tecla == pg.K_DOWN):
+		player.dmp = KI_UP
 		
-	
-	
 	return player
 
 def trata_solta_tecla_player(player, tecla):
 	if(tecla == pg.K_RIGHT or tecla == pg.K_LEFT):
 		player.dx = 0
+		player.status = 1
+	elif(tecla == pg.K_DOWN):
+		player.dmp = 0
 	return player
 
 def trata_tecla(jogo, tecla):

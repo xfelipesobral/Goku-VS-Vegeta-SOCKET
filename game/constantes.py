@@ -14,11 +14,23 @@ import random
 TELA = pg.display.set_mode((LARGURA, ALTURA))
 
 try:
-    IMG_P1 = pg.image.load('images/crono_left.gif')
+    IMG_GOKU_PARADO = pg.image.load('images/goku/parado.png')
+    IMG_GOKU_ANDANDO = pg.image.load('images/goku/andando.png')
+    IMG_GOKU_ATIRANDO = pg.image.load('images/goku/atirando.png')
+    IMG_GOKU_KI = pg.image.load('images/goku/ki.png')
+
+    IMG_VEGETA_PARADO = pg.image.load('images/vegeta/parado.png')
+    IMG_VEGETA_ANDANDO = pg.image.load('images/vegeta/andando.png')
+    IMG_VEGETA_ATIRANDO = pg.image.load('images/vegeta/atirando.png')
+    IMG_VEGETA_KI = pg.image.load('images/vegeta/ki.png')
+
+    IMG_P1 = pg.image.load('images/goku/parado.png')
     IMG_P2 = pg.image.load('images/p2.png')
     IMG_BACKGROUND = pg.image.load('images/bg.png')
     IMG_LIFE = pg.image.load('images/life.png')
     IMG_DISCONNECT = pg.image.load('images/connect.png')
+
+    IMG_KI = pg.image.load('images/ki.png')
 
 except:
     IMG_P1 = pg.Surface((100,100),pg.SRCALPHA)
@@ -30,9 +42,15 @@ except:
 
 IMG_LIFE = pg.transform.scale(IMG_LIFE, (32, 32))
 IMG_DISCONNECT = pg.transform.scale(IMG_DISCONNECT, (32, 32))
+IMG_KI = pg.transform.scale(IMG_KI, (32, 32))
 
-DX = 10
+IMG_GOKU_ANDANDO_V = pg.transform.flip(IMG_GOKU_ANDANDO, True, False)
+
+IMG_P1 = pg.transform.scale(IMG_P1, (32, 96))
+DX = 15
 DY = 10
+
+KI_UP = 2
 
 PAREDE_ESQUERDA = 0
 PAREDE_DIREITA = LARGURA

@@ -25,16 +25,19 @@ enviar("CONECTEI$jogo")
 '''
 
 class Jogador:
-    def __init__(self, id, ip, x, y, hp):
+    def __init__(self, id, ip, x, y, dx, dmp, hp, mp):
         self.id = id
         self.ip = ip
         self.x = x
         self.y = y
+        self.dx = dx
+        self.dmp = dmp
         self.hp = hp
+        self.mp = mp
 
 def criarJogador(data):
     data = json.loads(data)
-    jogador = Jogador(int(data["id"]), data["ip"], int(data["x"]), int(data["y"]), int(data["hp"]))
+    jogador = Jogador(int(data["id"]), data["ip"], int(data["x"]), int(data["y"]), int(data["dx"]), int(data["dmp"]), int(data["hp"]), int(data["mp"]))
     return jogador
 
 def initMain(data, jogo):
@@ -45,6 +48,9 @@ def att(player, dados):
     player.x = dados["x"]
     player.y = dados["y"]
     player.hp = dados["hp"]
+    player.dmp = dados["dmp"]
+    player.dx = dados["dx"]
+    player.mp = dados["mp"]
 
     return player
 

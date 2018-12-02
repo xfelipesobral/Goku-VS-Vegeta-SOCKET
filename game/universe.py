@@ -93,8 +93,16 @@ def big_bang(inic, tela,
         ### PROBLEMA -> NÃO ATUALIZANDO O SERVIDOR QUANDO O DX É 0
         '''
         try:
-            if(estado.jogador.dx != 0 or estado.jogador.dy != 0):
+            enviarJogador(estado.jogador)
+            #if(estado.jogador.dx != 0 or estado.jogador.dy != 0):
+            #    enviarJogador(estado.jogador)
+
+            '''
+            if(estado.jogador.status == 1):
                 enviarJogador(estado.jogador)
+                #estado.jogador.status = 0
+            '''
+                
         except:
             pass
 

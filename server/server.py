@@ -40,16 +40,13 @@ while True:
 
     if(chave == "CONECTEI"):
         print(ip)
-        player = Jogador(lastPlayerID, ip, 350, 580, 100)
+        player = Jogador(lastPlayerID, ip, 350, 580, 0, 0, 100, 50)
         lastPlayerID += 1
         player.inserir()
         ipConectados.append(ip)
         enviar(udp, "CONECTEI$conectou", ip)
         stringInitPlayer(udp, ip, player)
         atualizarJogadores(udp, ipConectados, jogadores)
-
-    if(chave == "JOGADORES"):
-        enviar(udp, "JOGADORES$"+jogadores[0], ip)
 
     if(chave == "ATUALIZAR_JOGADOR"):
         attJogador(udp, ipConectados, dado)
