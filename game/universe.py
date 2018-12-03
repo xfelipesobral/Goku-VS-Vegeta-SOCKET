@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# http://www.oocities.org/saiyangohan71486/sprites.html
+
 import pygame as pg
 import sys, os
 import threading
@@ -80,33 +82,20 @@ def big_bang(inic, tela,
 
             if event.type == pg.KEYDOWN:
                 estado = quando_tecla(estado, event.key)
-                #enviarJogador(estado.jogador)
-                
                 desenha_tela()
+
             elif event.type == pg.KEYUP:
                 estado = quando_solta_tecla(estado, event.key)
-                #enviarJogador(estado.jogador)
 
-            elif event.type in [pg.MOUSEBUTTONDOWN, pg.MOUSEBUTTONUP, pg.MOUSEMOTION]:
-                x, y = pg.mouse.get_pos()
-                estado = quando_mouse(estado, x, y, event.type)
-                desenha_tela()
-
-
-        '''
-        ### PROBLEMA -> NÃO ATUALIZANDO O SERVIDOR QUANDO O DX É 0
-        '''
         try:
             enviarJogador(estado.jogador)
             #if(estado.jogador.dx != 0 or estado.jogador.dy != 0):
             #    enviarJogador(estado.jogador)
 
-            '''
-            if(estado.jogador.status == 1):
-                enviarJogador(estado.jogador)
-                #estado.jogador.status = 0
-            '''
-                
+            if(len(jogo.poderes) != 0):
+                enviarPoder(estado.poderes)
+
+               
         except:
             pass
 

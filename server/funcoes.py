@@ -4,6 +4,27 @@
 import socket
 import json
 
+jogadores = list()
+
+class Jogador:
+    def __init__(self, id, ip, x, y, dx, dy, dmp, direct, hp, mp):
+        self.id = id
+        self.ip = ip
+        self.x = x
+        self.y = y
+        self.dx = dx
+        self.dy = dy
+        self.dmp = dmp
+        self.direct = direct
+        self.hp = hp
+        self.mp = mp
+
+    def inserir(self):
+        jogadores.append(self)
+
+    def remover(self):
+        jogadores.remove(self)
+
 def enviar(udp, data, destino):
 	if type(destino) is list:
 		for ip in destino:

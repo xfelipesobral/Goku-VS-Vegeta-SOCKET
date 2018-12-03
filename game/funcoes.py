@@ -48,6 +48,17 @@ def aumentar_ki(player):
 	if player.mp > 100:
 		player.mp = 100
 
+def mover_poder(poder):
+	if(poder.x < 0 or poder.x > LARGURA):
+		destruirPoder()
+	else:
+		poder.x = poder.x + poder.dx
+
+		if(poder.x > LARGURA):
+			destruirPoder()
+		elif(poder.x < 0):
+			destruirPoder()
+
 
 			
 
@@ -57,6 +68,9 @@ def mover_jogo(jogo):
 		mover_player(jogo.jogador)
 		voar(jogo.jogador)
 		aumentar_ki(jogo.jogador)
+
+		for poder in jogo.poderes:
+			mover_poder(poder)
 	except:
 		return jogo
  
@@ -94,11 +108,33 @@ def desenha_jogador(j):
 	except:
 		print(j)
 
+def desenha_poder(poder, jogador):
+	try:
+		if jogador.id == 0:
+			personagem = IMG_GOKU
+		elif jogador.id == 1:
+			personagem = IMG_VEGETA
+
+		img = personagem[4]
+
+		if(jogador.direct == -1):
+			img = pg.transform.flip(img, True, False)
+
+		TELA.blit(img, (poder.x - img.get_width()/2, poder.y - img.get_height()/2))
+	except:
+		pass
+
 def desenha_jogo(jogo):
 	TELA.blit(IMG_BACKGROUND, (0,0))
 
 	for jogador in jogo.jogadores:
 		desenha_jogador(jogador)
+
+	try:
+		for poder in jogo.poderes:
+			desenha_poder(poder, jogo.jogador)
+	except:
+		pass
 
 	#print(jogo.jogadores[0].dx)
 
@@ -130,9 +166,9 @@ def trata_tecla_player(player, tecla):
 	elif (tecla == pg.K_RIGHT) or (tecla == pg.K_RIGHT and pg.K_SPACE):
 		player.dx = DX
 		player.direct = 1
-	elif (tecla == pg.K_UP):
+	elif (tecla == pg.K_UP) or (tecla == pg.K_UP and pg.K_SPACE):
 		player.dy = -DY
-	elif (tecla == pg.K_DOWN):
+	elif (tecla == pg.K_DOWN) or (tecla == pg.K_DOWN and pg.K_SPACE):
 		player.dy = DY
 	elif (tecla == pg.K_w) and (player.dx == 0):
 		player.dmp = KI_UP
@@ -148,11 +184,37 @@ def trata_solta_tecla_player(player, tecla):
 		player.dmp = 0
 	return player
 
+def trata_tecla_poderes(jogo, tecla):
+	if (tecla == pg.K_SPACE):
+		return soltarPoder(jogo.poderes, jogo.jogador)
+
 def trata_tecla(jogo, tecla):
 	jogo.jogador = trata_tecla_player(jogo.jogador, tecla)
+	jogo.poderes = trata_tecla_poderes(jogo, tecla)
 	return jogo
 
 def trata_solta_tecla(jogo, tecla):
 	jogo.jogador = trata_solta_tecla_player(jogo.jogador, tecla)
 	return jogo
 
+
+'''
+### PODERES
+'''
+
+def soltarPoder(poderes, jogador):
+	try:
+		x_f = 0
+		direct = -1
+		if(jogador.direct == 1):
+			x_f = LARGURA
+			direct = 1
+
+		if(jogador.mp>14):
+			novo = Poder(jogador.id, jogador.x, x_f)
+			jogador.dx = jogador.dx * direct
+			jogo.poderes.append(novo)
+			
+			return jogo.poderes
+	except:
+		print ("NAO FOI POSSIVEL LANCAR PODER")

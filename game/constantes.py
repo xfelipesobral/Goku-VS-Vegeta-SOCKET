@@ -18,11 +18,13 @@ try:
     IMG_GOKU_ANDANDO = pg.image.load('images/goku/andando.png')
     IMG_GOKU_ATIRANDO = pg.image.load('images/goku/atirando.png')
     IMG_GOKU_KI = pg.image.load('images/goku/ki.png')
+    IMG_GOKU_TIRO = pg.image.load('images/goku/tiro.png')
 
     IMG_VEGETA_PARADO = pg.image.load('images/vegeta/parado.png')
     IMG_VEGETA_ANDANDO = pg.image.load('images/vegeta/andando.png')
     IMG_VEGETA_ATIRANDO = pg.image.load('images/vegeta/atirando.png')
     IMG_VEGETA_KI = pg.image.load('images/vegeta/ki.png')
+    IMG_VEGETA_TIRO = pg.image.load('images/vegeta/tiro.png')
 
     IMG_P1 = pg.image.load('images/goku/parado.png')
     IMG_P2 = pg.image.load('images/p2.png')
@@ -50,8 +52,8 @@ IMG_KI = pg.transform.scale(IMG_KI, (32, 32))
 '''
 ### IMAGENS DOS PERSONAGENS
 '''
-IMG_GOKU = [IMG_GOKU_PARADO, IMG_GOKU_ANDANDO, IMG_GOKU_KI, IMG_GOKU_ATIRANDO]
-IMG_VEGETA = [IMG_VEGETA_PARADO, IMG_VEGETA_ANDANDO, IMG_VEGETA_KI, IMG_VEGETA_ATIRANDO]
+IMG_GOKU = [IMG_GOKU_PARADO, IMG_GOKU_ANDANDO, IMG_GOKU_KI, IMG_GOKU_ATIRANDO, IMG_GOKU_TIRO]
+IMG_VEGETA = [IMG_VEGETA_PARADO, IMG_VEGETA_ANDANDO, IMG_VEGETA_KI, IMG_VEGETA_ATIRANDO, IMG_GOKU_TIRO]
 
 IMG_P1 = pg.transform.scale(IMG_P1, (32, 96))
 DX = 15

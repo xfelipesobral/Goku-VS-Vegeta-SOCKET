@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from funcoes import *
-from players_sv import *
 
 HOST = 'localhost'    
 PORT = 5000            
@@ -17,20 +16,6 @@ ipConectados = list()
 atualizacoes = 0
 
 print("SERVIDOR INICIALIZADO! [IP: "+HOST+":"+str(PORT)+"]")
-
-
-'''
-    // ATUALIZAÇÕES
-
-def atualizarJogadores():
-    for jogador in jogadores:
-        data = "BROADCAST_PLAYER$"+stringNewPlayer(jogador)
-        enviar(udp, data, ipConectados)
-
-def atualizarJogador(jogador):
-    data = "BROADCAST_PLAYER$"+stringNewPlayer(jogador)
-    enviar(udp, data, ipConectados)
-'''
 
 while True:
     data, ip = udp.recvfrom(1024)
@@ -60,6 +45,10 @@ while True:
         attJogador(udp, ipConectados, dado)
         print(atualizacoes)
         atualizacoes += 1
+
+    if(chave == "ATUALIZAR_PODERES"):
+        data = "BROADCAST_PODERES$"+dado
+        enviar(udp, data, ip)
 
     #verificar(msg.decode(), cliente)
     #print (cliente, msg.decode())
