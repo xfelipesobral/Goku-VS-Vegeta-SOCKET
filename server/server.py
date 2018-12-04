@@ -43,12 +43,16 @@ while True:
 
     if(chave == "ATUALIZAR_JOGADOR"):
         attJogador(udp, ipConectados, dado)
-        print(atualizacoes)
+        #print(atualizacoes)
         atualizacoes += 1
 
-    if(chave == "ATUALIZAR_PODERES"):
-        data = "BROADCAST_PODERES$"+dado
-        enviar(udp, data, ip)
+    if(chave == "ATUALIZAR_PODER"):
+        data = "BROADCAST_PODER$"+dado
+
+        for ipX in ipConectados:
+            if(ipX != ip):
+                print(ipX)
+                enviar(udp, data, ipX)
 
     #verificar(msg.decode(), cliente)
     #print (cliente, msg.decode())

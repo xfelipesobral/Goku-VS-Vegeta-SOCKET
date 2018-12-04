@@ -57,6 +57,9 @@ def big_bang(inic, tela,
             if(chave == "BROADCAST_PLAYER"):
                 atualizarJogador(data[1], estado)
 
+            if(chave == "BROADCAST_PODER"):
+                atualizarPoder(data[1], estado)
+
             if(chave == "KICK"):
                 udp.close()
                 sys.exit(0)
@@ -89,19 +92,17 @@ def big_bang(inic, tela,
 
         try:
             enviarJogador(estado.jogador)
-            #if(estado.jogador.dx != 0 or estado.jogador.dy != 0):
-            #    enviarJogador(estado.jogador)
 
-            if(len(jogo.poderes) != 0):
-                enviarPoder(estado.poderes)
+            #if(len(jogo.poderes) != 0):
+            #   enviarPoder(estado.poderes)
 
-               
         except:
             pass
-
 
         estado = quando_tick(estado)
 
         desenha_tela()
+
+       # print(estado)
 
         clock.tick(frequencia)

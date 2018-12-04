@@ -12,6 +12,14 @@ import random
 '''
 
 '''
+# PODER
+'''
+
+def destruirPoder(poder, jogo):
+	jogo.poderes.remove(poder)
+
+
+'''
 # MOVER_JOGO
 '''
 
@@ -48,19 +56,17 @@ def aumentar_ki(player):
 	if player.mp > 100:
 		player.mp = 100
 
-def mover_poder(poder):
+def mover_poder(poder, jogo):
 	if(poder.x < 0 or poder.x > LARGURA):
-		destruirPoder()
+		destruirPoder(poder, jogo)
 	else:
 		poder.x = poder.x + poder.dx
 
 		if(poder.x > LARGURA):
-			destruirPoder()
+			destruirPoder(poder, jogo)
 		elif(poder.x < 0):
-			destruirPoder()
-
-
-			
+			destruirPoder(poder, jogo)
+	
 
 def mover_jogo(jogo):
 
@@ -70,7 +76,7 @@ def mover_jogo(jogo):
 		aumentar_ki(jogo.jogador)
 
 		for poder in jogo.poderes:
-			mover_poder(poder)
+			mover_poder(poder, jogo)
 	except:
 		return jogo
  
@@ -109,20 +115,17 @@ def desenha_jogador(j):
 		print(j)
 
 def desenha_poder(poder, jogador):
-	try:
-		if jogador.id == 0:
-			personagem = IMG_GOKU
-		elif jogador.id == 1:
-			personagem = IMG_VEGETA
+	if poder.id_dono == 0:
+		personagem = IMG_GOKU
+	elif poder.id_dono == 1:
+		personagem = IMG_VEGETA
 
-		img = personagem[4]
+	img = personagem[4]
 
-		if(jogador.direct == -1):
-			img = pg.transform.flip(img, True, False)
+	if(poder.dx < 0):
+		img = pg.transform.flip(img, True, False)
 
-		TELA.blit(img, (poder.x - img.get_width()/2, poder.y - img.get_height()/2))
-	except:
-		pass
+	TELA.blit(img, (poder.x - img.get_width()/2, poder.y - img.get_height()/2))
 
 def desenha_jogo(jogo):
 	TELA.blit(IMG_BACKGROUND, (0,0))
@@ -136,22 +139,27 @@ def desenha_jogo(jogo):
 	except:
 		pass
 
-	#print(jogo.jogadores[0].dx)
-
 	fonte = pg.font.SysFont("monospace", 40)
 
-	#print(jogo.jogador.mp)
+	## DESENHA LADO GOKU
 	try:
 		TELA.blit(IMG_LIFE, (X_LIFE, Y_LIFE))
-		textoP1= fonte.render(str(jogo.jogadores[0].hp), 1, (255, 255, 255))
+		TELA.blit(IMG_KI, (X_LIFE, Y_LIFE-35))
+		textoP1 = fonte.render(str(jogo.jogadores[0].hp), 1, (255, 255, 255))
+		textoP1_M = fonte.render(str(jogo.jogadores[0].mp), 1, (255, 255, 255))
 		TELA.blit(textoP1, (X_LIFE+32, Y_LIFE-5))		
+		TELA.blit(textoP1_M, (X_LIFE+32, Y_LIFE-40))		
 	except: 
 		TELA.blit(IMG_DISCONNECT, (X_LIFE+32, Y_LIFE))
 
+	## DESENHA LADO VEGETA
 	try:
 		TELA.blit(IMG_LIFE, (X_LIFE2, Y_LIFE))
+		TELA.blit(IMG_KI, (X_LIFE2, Y_LIFE-35))
 		textoP2 = fonte.render(str(jogo.jogadores[1].hp), 1, (255, 255, 255))
+		textoP2_M = fonte.render(str(jogo.jogadores[1].mp), 1, (255, 255, 255))
 		TELA.blit(textoP2, (X_LIFE2-72, Y_LIFE-5))
+		TELA.blit(textoP2_M, (X_LIFE2-72, Y_LIFE-40))
 	except: 
 		TELA.blit(IMG_DISCONNECT, (X_LIFE2-32, Y_LIFE))
 
@@ -186,11 +194,17 @@ def trata_solta_tecla_player(player, tecla):
 
 def trata_tecla_poderes(jogo, tecla):
 	if (tecla == pg.K_SPACE):
-		return soltarPoder(jogo.poderes, jogo.jogador)
+		jogo.poderes = soltarPoder(jogo.poderes, jogo.jogador)
+		jogo.jogador.mp -= 15
+		
+		if jogo.jogador.mp < 0:
+			jogo.jogador.mp = 0
+
+	return jogo
 
 def trata_tecla(jogo, tecla):
 	jogo.jogador = trata_tecla_player(jogo.jogador, tecla)
-	jogo.poderes = trata_tecla_poderes(jogo, tecla)
+	jogo = trata_tecla_poderes(jogo, tecla)
 	return jogo
 
 def trata_solta_tecla(jogo, tecla):
@@ -198,23 +212,5 @@ def trata_solta_tecla(jogo, tecla):
 	return jogo
 
 
-'''
-### PODERES
-'''
 
-def soltarPoder(poderes, jogador):
-	try:
-		x_f = 0
-		direct = -1
-		if(jogador.direct == 1):
-			x_f = LARGURA
-			direct = 1
-
-		if(jogador.mp>14):
-			novo = Poder(jogador.id, jogador.x, x_f)
-			jogador.dx = jogador.dx * direct
-			jogo.poderes.append(novo)
-			
-			return jogo.poderes
-	except:
-		print ("NAO FOI POSSIVEL LANCAR PODER")
+	
