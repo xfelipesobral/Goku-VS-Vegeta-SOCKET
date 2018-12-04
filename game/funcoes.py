@@ -13,57 +13,13 @@ import random
 
 def distancia(x1, y1, x2, y2):
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-'''
-def colidirem(vaca, leite, bala, zumbi, feno):
-    raio1 = IMG_VACA.get_width()/2
-    raio2 = IMG_ZUMBI.get_width()/2
-    raio3 = IMG_BALA_V.get_width()/2
-    raio4 = IMG_BALA_Z.get_width()/2
-    raio5 = IMG_FENO.get_width()/2
 
-
-    ## COLISÕES QUE FAZEM PERDER
-    d = distancia(vaca.x, Y_VACA, zumbi.x, zumbi.y) ## VACA /=/ ZUMBI == PERDEU
-    if d <= raio1 + raio2:
-        return 1
-
-    d = distancia(bala.x, bala.y, vaca.x, Y_VACA) ## BALA /=/ VACA == PERDEU
-    if d <= raio1 + raio4:
-        return 1
-
-    if zumbi.y >= PAREDE_BAIXO-raio2: ## ZUMBI X == PAREDE BAIXO |== PERDEU
-        return 1
-
-    ##COLISÕES QUE FAZEM GANHAR
-    if leite != None: 
-        d = distancia(leite.x, leite.y, zumbi.x, zumbi.y) ## LEITE /=/ ZUMBI = GANHOU
-        if d <= raio3 + raio2:
-            return 2
-
-    ##COLISAO COM O FENO
-    if feno != None:
-        d = distancia(bala.x, bala.y, feno.x, feno.y)
-        if d <= raio4+raio5:
-            bala.y = PAREDE_BAIXO+100
-            return 0
-
-        d = distancia(leite.x, leite.y, feno.x, feno.y)
-        if d <= raio3+raio5:
-            leite.y = PAREDE_CIMA-50
-            return 3
-
-        d = distancia(zumbi.x, zumbi.y, feno.x, feno.y)
-        if d <= raio2+raio5:
-            return 3
-
-    return 0
-'''
 def colidirem(jogador, poder):
 	raioJogador = None
 	if(jogador.id == 0):
-		raioJogador = IMG_VEGETA_PARADO.get_width()/2
+		raioJogador = IMG_VEGETA_PARADO.get_width()/4
 	elif(jogador.id == 1):
-		raioJogador = IMG_GOKU_ANDANDO.get_width()/2
+		raioJogador = IMG_GOKU_ANDANDO.get_width()/4
 	raioPoder = IMG_GOKU_KI.get_width()/2
 
 	d = distancia(jogador.x, jogador.y, poder.x, poder.y)
@@ -71,6 +27,16 @@ def colidirem(jogador, poder):
 		return True
 
 	return False
+
+def verif_ganhar(jogo):
+	if(jogo.game_ganho[0]):
+		return
+
+	for jogador in jogo.jogadores:
+		if(jogador.hp == 0):
+			jogo.game_ganho[0] = True;
+			jogo.game_ganho.append(jogador.id);
+
 
 '''
 # PODER
@@ -155,6 +121,10 @@ def mover_jogo(jogo):
 
 			if(jogo.jogador.hp < 0):
 				jogo.jogador.hp = 0
+
+		verif_ganhar(jogo)
+		
+		#print(jogo.game_ganho)
 			
 	except:
 		return jogo
@@ -204,6 +174,7 @@ def desenha_poder(poder, jogador):
 	if(poder.dx < 0):
 		img = pg.transform.flip(img, True, False)
 
+		
 	TELA.blit(img, (poder.x - img.get_width()/2, poder.y - img.get_height()/2))
 
 def desenha_jogo(jogo):
@@ -241,6 +212,12 @@ def desenha_jogo(jogo):
 		TELA.blit(textoP2_M, (X_LIFE2-72, Y_LIFE-40))
 	except: 
 		TELA.blit(IMG_DISCONNECT, (X_LIFE2-32, Y_LIFE))
+
+	if(jogo.game_ganho[0]):
+		if(jogo.game_ganho[1] == 0):
+			TELA.blit(IMG_VEGETA_WIN, (800/2 - IMG_VEGETA_WIN.get_width()/2, 640/2 - IMG_VEGETA_WIN.get_height()/2))
+		else:
+			TELA.blit(IMG_GOKU_WIN, (800/2 - IMG_GOKU_WIN.get_width()/2, 640/2 - IMG_GOKU_WIN.get_height()/2))
 
 '''
 # TRATA_TECLA

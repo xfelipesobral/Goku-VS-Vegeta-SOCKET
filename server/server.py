@@ -31,9 +31,9 @@ while True:
         else:
             print(ip)
             if(lastPlayerID == 0):
-                player = Jogador(lastPlayerID, ip, 100, 565, 0, 0, 0, 1, 100, 50)
+                player = Jogador(lastPlayerID, ip, 100, 565, 0, 0, 0, 1, 200, 50)
             else:
-                player = Jogador(lastPlayerID, ip, 700, 565, 0, 0, 0, -1, 100, 50)
+                player = Jogador(lastPlayerID, ip, 700, 565, 0, 0, 0, -1, 200, 50)
             lastPlayerID += 1
             player.inserir()
             ipConectados.append(ip)

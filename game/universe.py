@@ -99,6 +99,9 @@ def big_bang(inic, tela,
         except:
             pass
 
+        if(estado.game_ganho[0]):
+            print("PERDEUUUUUUUUUUUUU OTARIOOOOOOOOOOO")
+
         estado = quando_tick(estado)
 
         desenha_tela()

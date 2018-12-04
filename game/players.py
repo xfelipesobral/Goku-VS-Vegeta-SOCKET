@@ -7,7 +7,7 @@ import socket
 ##  CONEXAO
 '''
 
-HOST = 'localhost' 
+HOST = 'localhost'
 PORT = 5000     
 
 udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

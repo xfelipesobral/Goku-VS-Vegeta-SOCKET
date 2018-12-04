@@ -20,11 +20,17 @@ try:
     IMG_GOKU_KI = pg.image.load('images/goku/ki.png')
     IMG_GOKU_TIRO = pg.image.load('images/goku/tiro.png')
 
+    IMG_GOKU_WIN = pg.image.load('images/goku_win.png')
+
     IMG_VEGETA_PARADO = pg.image.load('images/vegeta/parado.png')
     IMG_VEGETA_ANDANDO = pg.image.load('images/vegeta/andando.png')
     IMG_VEGETA_ATIRANDO = pg.image.load('images/vegeta/atirando.png')
     IMG_VEGETA_KI = pg.image.load('images/vegeta/ki.png')
     IMG_VEGETA_TIRO = pg.image.load('images/vegeta/tiro.png')
+
+    IMG_VEGETA_WIN = pg.image.load('images/VEGETA_win.png')
+
+    IMG_EXPLOSAO = pg.image.load('images/explosion.png')
 
     IMG_P1 = pg.image.load('images/goku/parado.png')
     IMG_P2 = pg.image.load('images/p2.png')

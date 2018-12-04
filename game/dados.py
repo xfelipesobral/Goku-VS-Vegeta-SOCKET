@@ -19,5 +19,6 @@ P2_PADRAO = P2(PAREDE_DIREITA, PAREDE_BAIXO, 0, 0, 100)
 
 Jogo = namedlist("Jogo", "jogador, jogadores, poderes, game_ganho")
 
-JOGO_INICIAL = Jogo(None, [], [], False)
+JOGO_INICIAL = Jogo(None, [], [], [False])
+JOGO_FINAL = Jogo(None, None, None, [True])
 
