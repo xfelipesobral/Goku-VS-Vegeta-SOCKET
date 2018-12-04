@@ -122,7 +122,7 @@ def soltarPoder(poderes, jogador):
 		direct = 1
 
 	if(jogador.mp>15):
-		novo = Poder(jogador.id, jogador.x, x_f, jogador.y, direct)
+		novo = Poder(jogador.id, jogador.x+(32*direct), x_f, jogador.y, direct)
 		novo.dx = novo.dx * novo.direct
 		enviarPoder(novo)
 		poderes.append(novo)

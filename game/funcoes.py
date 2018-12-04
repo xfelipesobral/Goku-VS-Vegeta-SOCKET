@@ -11,6 +11,67 @@ import random
 ====================
 '''
 
+def distancia(x1, y1, x2, y2):
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+'''
+def colidirem(vaca, leite, bala, zumbi, feno):
+    raio1 = IMG_VACA.get_width()/2
+    raio2 = IMG_ZUMBI.get_width()/2
+    raio3 = IMG_BALA_V.get_width()/2
+    raio4 = IMG_BALA_Z.get_width()/2
+    raio5 = IMG_FENO.get_width()/2
+
+
+    ## COLISÕES QUE FAZEM PERDER
+    d = distancia(vaca.x, Y_VACA, zumbi.x, zumbi.y) ## VACA /=/ ZUMBI == PERDEU
+    if d <= raio1 + raio2:
+        return 1
+
+    d = distancia(bala.x, bala.y, vaca.x, Y_VACA) ## BALA /=/ VACA == PERDEU
+    if d <= raio1 + raio4:
+        return 1
+
+    if zumbi.y >= PAREDE_BAIXO-raio2: ## ZUMBI X == PAREDE BAIXO |== PERDEU
+        return 1
+
+    ##COLISÕES QUE FAZEM GANHAR
+    if leite != None: 
+        d = distancia(leite.x, leite.y, zumbi.x, zumbi.y) ## LEITE /=/ ZUMBI = GANHOU
+        if d <= raio3 + raio2:
+            return 2
+
+    ##COLISAO COM O FENO
+    if feno != None:
+        d = distancia(bala.x, bala.y, feno.x, feno.y)
+        if d <= raio4+raio5:
+            bala.y = PAREDE_BAIXO+100
+            return 0
+
+        d = distancia(leite.x, leite.y, feno.x, feno.y)
+        if d <= raio3+raio5:
+            leite.y = PAREDE_CIMA-50
+            return 3
+
+        d = distancia(zumbi.x, zumbi.y, feno.x, feno.y)
+        if d <= raio2+raio5:
+            return 3
+
+    return 0
+'''
+def colidirem(jogador, poder):
+	raioJogador = None
+	if(jogador.id == 0):
+		raioJogador = IMG_VEGETA_PARADO.get_width()/2
+	elif(jogador.id == 1):
+		raioJogador = IMG_GOKU_ANDANDO.get_width()/2
+	raioPoder = IMG_GOKU_KI.get_width()/2
+
+	d = distancia(jogador.x, jogador.y, poder.x, poder.y)
+	if d <= raioJogador + raioPoder:
+		return True
+
+	return False
+
 '''
 # PODER
 '''
@@ -75,8 +136,26 @@ def mover_jogo(jogo):
 		voar(jogo.jogador)
 		aumentar_ki(jogo.jogador)
 
+		alvo = None
+	
 		for poder in jogo.poderes:
+			
 			mover_poder(poder, jogo)
+			
+			if poder.id_dono == 0:
+				alvo = 1
+			else:
+				alvo = 0
+			if colidirem(jogo.jogadores[alvo], poder):
+				if(jogo.jogador.id == alvo):
+					jogo.jogador.hp -= poder.dano
+
+				jogo.jogadores[alvo].hp -= poder.dano
+				destruirPoder(poder, jogo)
+
+			if(jogo.jogador.hp < 0):
+				jogo.jogador.hp = 0
+			
 	except:
 		return jogo
  
